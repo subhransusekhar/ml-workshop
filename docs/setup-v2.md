@@ -25,7 +25,7 @@ export REPO_HOME=`pwd`
 
 - Create a new project on the terminal
 ```
-oc new-project ml-workshop  
+oc new-project ml-workshop
 ```
 
 - On GUI, select click project ml-workshop to select it
