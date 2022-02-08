@@ -142,7 +142,6 @@ Next, you need to ensure the Jenkins Service IPs are set.
 - If not, open a new tab and go to Networking -> Services, filter on _Jenkins_ and get the 2 IPs and slot them into the previous section (_Jenkins URL_ and _Jenkins Tunnel_) remembering to begin _Jenkins URL_ with a _http_ and save there.
 ![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/36-jenkins-services.png)
 
-
 --------------------------------------------------------------------------------------------------------
 
 
@@ -203,50 +202,162 @@ Save each of the three files and commit to your fork of this repository.
 
 --------------------------------------------------------------------------------------------------------
 
+## Configure the S3 Storage
 
-Next, navigate to OpenShift Routes and open the route _minio-ml-workshop-ui_. Login with credentials minio / minio123. Open the _rawdata_ bucket under Object Browser. Then upload the CSV file *Customer-Churn_P1.csv* available here (a different repo):
+### Download the Files Used For This Setup
 
-[https://github.com/tnscorcoran/ml-workshop-fsi/tree/main/data](https://github.com/tnscorcoran/ml-workshop-fsi/tree/main/data)
+<span style="color:yellow">*REVISIT: Insert the instructions for downloading the files that will be uploaded below.*</span>
 
-i.e. Download from here to your laptop and upload to the _rawdata_ bucket.
+### Configure Upload Files to the rawdata Bucket
 
-Now, in Minio, go to Buckets -> Models and make change it from _Private_ to _Public_
+1. Open the OpenShift console in your browser.
+2. Click: **Networking > Routes**
 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/11-2-minio-makemodels-public.png)
+![](./images/openshift-routes.png)
 
+3. Scroll down to find *minio-ml-workshop-ui*. 
+4. Click the Minio url under **Location** heading
+
+OpenShift opens a new browser tab and launches the Minio console and diaplays the login screen.
+
+![](./images/minio-1.png)
+
+5. Enter the following credentials:
+* Username: **minio**
+* Password: **minio123**
+6. Click **Login**
+
+Minio displays the main console and all of the existing S3 buckets.
+
+![](./images/minio-2.png)
+
+7. Scroll down to find the *Raw Data* bucket.
+8. Click **Browse**.
+
+Minio displays the bucket contents.
+
+You will now upload two folders (*customers* and *products*) to the *rawdata* bucket.
+
+### Upload the *customers* data
+
+9. Click: **Upload Files > Upload Folder**
+
+Minio prompts for the folder to upload.
+
+10. Navigate to the *customers* folder you extracted earlier. 
+11. Click: **Upload**.
+
+Minio uploads the folder and all file contents to the *raw data* S3 bucket.
+
+### Upload the *products* data
+
+12. Click: **Upload Files > Upload Folder**
+
+Minio prompts for the folder to upload.
+
+13. Navigate to the *products* folder you extracted earlier. 
+14. Click: **Upload**.
+
+Minio uploads the folder and all file contents to the *raw data* S3 bucket.
+
+The result should look like the following figure:
+
+![](./images/minio-3.png)
+
+### Change the *model* Bucket's Permissions
+
+15. Click **Buckets** in the Minio console pane.
+16. Scroll down to locate the **models** bucket.
+17. Click **Manage**
+
+Minio displays a configuration screen for the **models** bucket
+
+![](./images/minio-4.png)
+
+18. Click the **Edit** icon setting under **Accesses Policy**
+
+Minio displays **Change Access Policy** dialog box.
+
+![](./images/minio-5.png)
+
+19. Change this setting to **Public**.
+20. Click **Set**.
+
+The updated configuration is displayed.
+
+![](./images/minio-6.png)
 
 --------------------------------------------------------------------------------------------------------
 
-## Setup Superset
+## Configure Superset
 
 Now you need to set up Superset to talk to our S3 and Kafka raw data via Trino - exposing the data via SQL.
 
+1. Open the OpenShift console in your browser tab.
 
-In OpenShift, choose the Administration dropdown, navigate to Network -> Routes. Ensure the desired project is selected (ml-workshop in my case). Filter on the word Superset and open that route, by clicking on the URL as shown.
+![](./images/openshift-routes.png)
 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-1-route.png)
+2. Click the url for *superset*
 
-Enter credentials admin / admin
+OpenShift opens a new browser tab and displays the Superset login page.
 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-2-login.png)
+![](./images/superset-1.png)
 
-Choose menu item Data -> Databases. Create the Database called _trino_ as shown - adding the URI 
+5. Enter the following credentials:
+* Username: **admin**
+* Password: **admin**
+6. Click **SIGN IN**
+
+Superset diaplays the main console.
+
+![](./images/superset-2.png)
+
+7. Click: **Data > Databases**
+
+Superset displays a list of configured databases.
+
+![](./images/superset-3.png)
+
+8. Click: the **"+ DATABASE"** button
+
+Superset prompts for the database connection details
+
+![](./images/superset-4.png)
+
+9. Click the **Supported Databases** drop-down list
+10. Scroll down to the entry **Trino** and click it.
+11. Copy and paste the following text into the **SQL Alchemy URI** text box:
 ```
-trino://admin@trino-service:8080/ 
+trino://admin@trino-service:8080
 ```
-to connect to Trino as shown. Test the Connection. Then Add
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-3-add-db.png)
+12. Click **Test Connection**.
 
+If all steps have been performed correctly, Superset displays the message **Connection looks good!**.
 
-Move to the SQL LAB SETTINGS tab and notice we needed full access by selecting the checkboxes. Click Save.
+![](./images/superset-5.png)
 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-3-add-db-permissions.png)
+13. Click the **Advanced** tab in the **Edit Database** form.
 
+Superset prompts for the advanced database configuration.
 
-Now choose SQL LAB -> Saved Queries. Add a query as shown:
+![](./images/superset-6.png)
 
+14. Click **SQL Lab**.
+15. Complete the form as illustrated in the following figure:
+![](./images/superset-7.png)
+16. Click **Finish**
 
-Run this (**DO NOT SAVE YET**). We don't save this as it only needs to be run once per workshop
+17. Click **SQL Lab Settings** in the main toolbar.
+18. Click **Saved Queries**.
+
+![](./images/superset-8.png)
+
+19. Click the **+ QUERY** button.
+
+<span style="color:yellow">*NOTE: **DO NOT SAVE THE QUERY**. We don't save this as it only needs to be run once per workshop*</span>
+
+20. Copy and paste the query editor.
+
 ```
 CREATE TABLE hive.default.customer1 (
   customerId varchar,
@@ -262,11 +373,14 @@ WITH (format = 'CSV',
 )
 ```
 
-You should see _Result - true_ as shown. 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-saved-queries-3-run-createtable.png)
+<span style="color:yellow">REVISIT: Cannot complete writing these steps in the current environment. Come back and complete these...</span>
 
+21. Click **Run**.
 
-Now replace the CREATE TABLE with
+Superset displays *Result - true* as shown. 
+![](./images/40-superset-saved-queries-3-run-createtable.png)
+
+22. Replace the CREATE TABLE with
 ```
 SELECT kafkaData.*, s3Data.*  
 from customerchurn.default.data kafkaData,
@@ -274,7 +388,7 @@ from customerchurn.default.data kafkaData,
 where cast(kafkaData.customerId as VARCHAR) = s3Data.customerId
 ```
 Run the query as shown. You should see a resultset spaning personal and product consumption customer data. 
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/40-superset-saved-queries-3-run-joinedquery.png)
+![](./images/40-superset-saved-queries-3-run-joinedquery.png)
 
 Click Save AS - naming the query **Kafka-CSV-Join**
 
