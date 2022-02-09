@@ -348,7 +348,20 @@ CREATE TABLE hive.default.products
 
     )
 ```
-Run the query as shown. You should see a resultset spaning personal and product consumption customer data. 
+23. Click **Run**.
+
+Superset displays *Result - true* the same as it did in the previous step. 
+
+24. Replace the SQL command with
+```
+SELECT customers.*, products.*  
+from hive.default.customers customers,
+hive.default.products products
+where customers.customerId = products.customerId
+```
+
+
+Run the query as shown. You should see a resultset spanning personal and product consumption customer data. 
 ![](./images/40-superset-saved-queries-3-run-joinedquery.png)
 
 Click Save AS - naming the query **Kafka-CSV-Join**
