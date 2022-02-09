@@ -127,7 +127,7 @@ Save each of the three files and commit to your fork of this repository.
 
 <span style="color:yellow">*REVISIT: Insert the instructions for downloading the files that will be uploaded below.*</span>
 
-### Configure Upload Files to the rawdata Bucket
+### Upload Files to the rawdata Bucket
 
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**
@@ -150,7 +150,7 @@ Minio displays the main console and all of the existing S3 buckets.
 
 ![](./images/minio-2.png)
 
-7. Scroll down to find the *Raw Data* bucket.
+7. Scroll down to find the *rawdata* bucket.
 8. Click **Browse**.
 
 Minio displays the bucket contents.
