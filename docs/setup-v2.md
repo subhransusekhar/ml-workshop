@@ -132,6 +132,8 @@ Save each of the three files and commit to your fork of this repository.
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**
 
+<img src="./images/openshift-routes.png" alt="drawing" width="400"/>
+
 ![](./images/openshift-routes.png)
 
 3. Scroll down to find *minio-ml-workshop-ui*. 
@@ -283,7 +285,7 @@ Superset prompts for the advanced database configuration.
 20. Copy and paste the query editor.
 
 ```
-CREATE TABLE hive.default.customer1 (
+CREATE TABLE hive.default.customers (
   customerId varchar,
   gender varchar,
   seniorCitizen varchar,
@@ -293,7 +295,7 @@ CREATE TABLE hive.default.customer1 (
 )
 WITH (format = 'CSV',
   skip_header_line_count = 1,
-  EXTERNAL_LOCATION='s3a://rawdata/'
+  EXTERNAL_LOCATION='s3a://rawdata/customers'
 )
 ```
 
@@ -306,6 +308,7 @@ Superset displays *Result - true* as shown.
 
 22. Replace the CREATE TABLE with
 ```
+
 SELECT kafkaData.*, s3Data.*  
 from customerchurn.default.data kafkaData,
  	hive.default.customer1 s3Data
