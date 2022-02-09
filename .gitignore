@@ -12,3 +12,4 @@ notes*
 .DS_Store
 workspace.code-workspace
 notebook-image/spark-elyra/hadoop-2.10.1.tar.gz
+ml-workshop.code-workspace

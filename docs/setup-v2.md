@@ -5,6 +5,10 @@ You'll need
 - an OpenShift cluster - with admin rights. You can create one by following the instructions [here](http:/try.openshift.com)
 - the OpenShift command line interface, _oc_ available [here](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html)
 
+1. Log in to OpenShift
+
+
+
 ## Workshop Structure
 
 
@@ -57,6 +61,16 @@ oc new-project ml-workshop
 
 At this point, on GUI go to Installed Operators and wait until the _Open Data Hub_ related operator is installed.
 ![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/1-5-operatorhub-install-succeededXXXXXXXXXX.png)
+
+## Copy the Secrets into Airflow
+
+Create a new ke/value certificate in the project.
+Secret name: airflow-auth-cert
+Key name: ca.cert
+
+```
+openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
+```
 
 --------------------------------------------------------------------------------------------------------
 
@@ -132,7 +146,7 @@ Save each of the three files and commit to your fork of this repository.
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**
 
-<img src="./images/openshift-routes.png" alt="drawing" width="500"/>
+<img src="./images/openshift-routes.png" alt="drawing" width="600"/>
 
 3. Scroll down to find *minio-ml-workshop-ui*. 
 4. Click the Minio url under **Location** heading
@@ -148,7 +162,7 @@ OpenShift opens a new browser tab and launches the Minio console and diaplays th
 
 Minio displays the main console and all of the existing S3 buckets.
 
-<img src="./images/minio-2.png" alt="drawing" width="500"/>
+<img src="./images/minio-2.png" alt="drawing" width="400"/>
 
 7. Scroll down to find the *rawdata* bucket.
 8. Click **Browse**.
@@ -304,13 +318,31 @@ WITH (format = 'CSV',
 Superset displays *Result - true* as shown. 
 ![](./images/40-superset-saved-queries-3-run-createtable.png)
 
-22. Replace the CREATE TABLE with
+22. Replace the SQL command with
 ```
+CREATE TABLE hive.default.products
+    (
+         customerID VARCHAR,
+         Premium VARCHAR,
+         RelationshipManager VARCHAR,
+         PrimaryChannel VARCHAR,
+         HasCreditCard VARCHAR,
+         DebitCard VARCHAR,
+         IncomeProtection VARCHAR,
+         WealthManagement VARCHAR,
+         HomeEquityLoans VARCHAR,
+         MoneyMarketAccount VARCHAR,
+         CreditRating VARCHAR,
+         PaperlessBilling VARCHAR,
+         AccountType VARCHAR,
+         MonthlyCharges VARCHAR,
+         TotalCharges VARCHAR,
+         Churn VARCHAR
+    )WITH (FORMAT = 'CSV',
+          skip_header_line_count = 1,
+          EXTERNAL_LOCATION = 's3a://rawdata/products/'
 
-SELECT kafkaData.*, s3Data.*  
-from customerchurn.default.data kafkaData,
- 	hive.default.customer1 s3Data
-where cast(kafkaData.customerId as VARCHAR) = s3Data.customerId
+    )
 ```
 Run the query as shown. You should see a resultset spaning personal and product consumption customer data. 
 ![](./images/40-superset-saved-queries-3-run-joinedquery.png)
