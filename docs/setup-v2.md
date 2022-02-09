@@ -132,16 +132,14 @@ Save each of the three files and commit to your fork of this repository.
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**
 
-<img src="./images/openshift-routes.png" alt="drawing" width="400"/>
-
-![](./images/openshift-routes.png)
+<img src="./images/openshift-routes.png" alt="drawing" width="500"/>
 
 3. Scroll down to find *minio-ml-workshop-ui*. 
 4. Click the Minio url under **Location** heading
 
 OpenShift opens a new browser tab and launches the Minio console and diaplays the login screen.
 
-![](./images/minio-1.png)
+<img src="./images/minio-1.png" alt="drawing" width="500"/>
 
 5. Enter the following credentials:
 * Username: **minio**
@@ -150,7 +148,7 @@ OpenShift opens a new browser tab and launches the Minio console and diaplays th
 
 Minio displays the main console and all of the existing S3 buckets.
 
-![](./images/minio-2.png)
+<img src="./images/minio-2.png" alt="drawing" width="500"/>
 
 7. Scroll down to find the *rawdata* bucket.
 8. Click **Browse**.
