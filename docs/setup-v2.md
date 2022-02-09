@@ -72,6 +72,10 @@ Key name: ca.cert
 openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
 ```
 
+```
+oc exec app-aflow-airflow-worker-0 -c airflow-worker -- openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
+```
+
 --------------------------------------------------------------------------------------------------------
 
 ### Adding users to the workshop
