@@ -164,6 +164,9 @@ You will now upload two folders (*customers* and *products*) to the *rawdata* bu
 Minio prompts for the folder to upload.
 
 10. Navigate to the *customers* folder you extracted earlier. 
+
+<span style="color:yellow">*REVISIT: Need to navigate into the git repo.*</span>
+
 11. Click: **Upload**.
 
 Minio uploads the folder and all file contents to the *raw data* S3 bucket.
@@ -184,6 +187,8 @@ The result should look like the following figure:
 ![](./images/minio-3.png)
 
 ### Change the *model* Bucket's Permissions
+
+<span style="color:yellow">*REVISIT: Is this still needed?*</span>
 
 15. Click **Buckets** in the Minio console pane.
 16. Scroll down to locate the **models** bucket.
@@ -264,7 +269,7 @@ Superset prompts for the advanced database configuration.
 14. Click **SQL Lab**.
 15. Complete the form as illustrated in the following figure:
 ![](./images/superset-7.png)
-16. Click **Finish**
+16. Click **CONNECT** (or **FINISH** if you have done this step previously)
 
 17. Click **SQL Lab Settings** in the main toolbar.
 18. Click **Saved Queries**.
