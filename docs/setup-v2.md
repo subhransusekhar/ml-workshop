@@ -354,10 +354,10 @@ Superset displays *Result - true* the same as it did in the previous step.
 
 24. Replace the SQL command with
 ```
-SELECT customers.*, products.*  
+SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
 from hive.default.customers customers,
 hive.default.products products
-where customers.customerId = products.customerId
+where cast(customers.customerId as VARCHAR)= products.customerId
 ```
 
 
