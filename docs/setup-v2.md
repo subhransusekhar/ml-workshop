@@ -362,7 +362,7 @@ where customers.customerId = products.customerId
 
 
 Run the query as shown. You should see a resultset spanning personal and product consumption customer data. 
-![](./images/40-superset-saved-queries-3-run-joinedquery.png)
+![](./images/superset-10.png)
 
 Click Save AS - naming the query **Kafka-CSV-Join**
 
