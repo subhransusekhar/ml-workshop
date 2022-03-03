@@ -5,9 +5,6 @@ You'll need
 - an OpenShift cluster - with admin rights. You can create one by following the instructions [here](http:/try.openshift.com)
 - the OpenShift command line interface, _oc_ available [here](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html)
 
-1. Log in to OpenShift
-
-
 
 ## Workshop Structure
 
@@ -23,60 +20,178 @@ If you are running this as a workshop, it is recommended you fork this repo as t
 
 Do the following:
 - Clone this repo (or a fork thereof if you are a facilitator for students) and change directory into the root dir, _ml-workshop_.  Create a variable *REPO_HOME*_ for this directory
+
+*<span style="color:yellow">REVISIT: Change to clone based on a tag/branch:  
+git clone -b tag --single-branch https:// github.com/masoodfaisal/ml-workshop<span>*
+
 ```
-# REVISIT: Change to clone based on a tag/branch: git clone -b <tag> --single-branch https://github.com/masoodfaisal/ml-workshop
 git clone https://github.com/masoodfaisal/ml-workshop
 cd ml-workshop
 export REPO_HOME=`pwd`
 ```
 
-## Install Open Data Hub
+## Install the Open Data Hub Operator
 
 1. Log on to openShift with opentlc-mgr
-2. Use GUI to install ODH. It wil install in openshift-operators namespace
-3. Select ml-workhop namespace to update the kfdef
+2. Select the Administrator perspective
+3. Install the Open Data Hub operator. Click **Operators > Operator Hub**  
+   OpenShift displays the operator catalogue.  
+4. Click the *Filter by keybord* text box and type *open data hub*  
+   OpenShift displays the *Open Data Hub Operator* tile.
+5. Click the tile  
+   OpenShift displays a Commmunity Operator warning dialog box.
+6. Click **Continue**  
+   OpenShift displays the operator details.
+7. Click **Install**  
+   OpenShift prompts for the operator configuration details. 
+   <img src="./images/install-2.png" alt="drawing" width="500"/>  
+8. Accept all defaults and click **Install*  
+   OpenShift installs the operator and displays a diaglog box once complete.  
+   <img src="./images/install-3.png" alt="drawing" width="500"/>
+9. Click **View Operator**  
+    OpenShift displays the operator details.
+   <img src="./images/install-4.png" alt="drawing" width="500"/>  
 
-2. Get KFDef using Manifests URL: https://github.com/masoodfaisal/odh-manifests
+The Open Data Hub Operator is now installed. Proceed to create the workshop project and install Open Data Hub
 
+## Project Creation & ODH Installation Steps
+We will now create the workshop's project and install Open Data Hub into the project.  
+Before we do this we need to copy the Open Data Hub KfDef file that will instruct the operator which tools to install and how to configure them.
 
+Later in these steps you will also need to:  
+a. Edit the KfDef file you create in OpenShift with the URL of your cluster. Pay careful attention to those steps or Airflow will not run.  
+b. Update the certificate for Airflow.
 
+### Prerequisite Step:
+Before installing Open Data Hub you need to copy the KFDef file from a oublic git repository.
+1. Open the KFDef File from the github repository: https://github.com/masoodfaisal/odh-manifests/blob/master/kfdef/ml-workshop-limited.yaml
+2. Click the **Copy Raw Contents** button <img src="./images/install-1.png" alt="drawing" width="30"/> to copy the file contents to your clipboard. 
 
-- On the OpenShift console, choose the _Copy Login Command_ as shown and paste the _oc login ..._ command it gives to a terminal.
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/29-copy-login-command.png)
+Keep this in the clipboard, you will use it shortly.
 
-- Create a new project on the terminal
+### Create the Workshop's Project and Install ODH
+1. Create the **ml-workshop** project:  
+   1.1 Click **Home > Projects**  
+   1.2 Click the **Create Project** button on the top right of the screen  
+   1.3 Click the **Name** text box and type  **ml-workshop**  
+   1.4 Click **Create**  
+   OpenShift creates the project.  
+   <img src="./images/install-5.png" alt="drawing" width="300"/>  
+2. Delete the Limit Range for the project  
+   2.1 Click **Administration > LimitRanges**  
+   2.2 Click the hambuger button for the **ml-workshop-core-resource-limits**.
+   <img src="./images/install-11.png" alt="drawing" width="400"/>  
+   2.3 Click **Delete LimitRange**  
+   OpenShift removes the LImitRange for the project.
+2. Install Open Data Hub  
+   2.1 Click **Operators > Installed Operators**  
+   OpenShift displays all the operators currently installed.  
+   <span style="color:yellow">**Note that the ml-workshop project is unselected and **All Projects** is selected. You must make ml-workshop the active project.**<span> 
+
+   2.2 Click the **Projects** drop-down list and click **ml-workshop**  
+   <img src="./images/install-6.png" alt="drawing" width="300"/>  
+   2.3 Click **Open Data Hub Operator**.  
+   OpenShift displays the operator's details.  
+   <img src="./images/install-6.png" alt="drawing" width="300"/>  
+   2.4 Click **Open Data Hub** in the operator toolbar.  
+   OpenShift displays the operand details - of which there are none.
+   <img src="./images/install-7.png" alt="drawing" width="300"/>  
+   2.5 Click the **Create KfDef** button.  
+   2.6 Click the **YAML View** radio button  
+   OpenShift displays the KfDef YAML editor.  
+   <img src="./images/install-8.png" alt="drawing" width="300"/>  
+   2.7 Replace the entire YAML file with the KfDef YAML you copied to your clipboard in the *Prerequisits* step above.  
+   This KfDef file will tell OpenShift how to install and configure ODH.  
+   Before you save the KfDef you must edit one line of code.  
+   2.8 Locate the **airflow2** overlay in the code  
+   <img src="./images/install-9.png" alt="drawing" width="400"/>  
+   Around line 57 you will see a **value** field that contains part of the URL to your OpenShift clister.  
+   2.9 Replace the value with the the URI of **your** cluster from the *.apps* through to the *.com* as follows:   
 ```
-oc new-project ml-workshop
-```
+       - kustomizeConfig:
+        overlays:
+          - custom-image
+        parameters:
+          - name: OCP_APPS_URI
+            # TODO: Change this uri before applying the KfDef
+            value: .apps.cluster-9482.9482.sandbox744.opentlc.com
+        repoRef:
+          name: manifests
+          path: ml-workshop-airflow2
+```  
+  2.10 Click **Create**  
+       OpenShift creates the KfDef and proceeeds to deploy ODH.  
+  2.11 Click **Workloads > Pods** to observe the deployment progress.  
+      <img src="./images/install-10.png" alt="drawing" width="400"/>  
 
-- On GUI, select click project ml-workshop to select it
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/30-select-ml-workshop-project.png)
 
-- Before installation, you may need to get your OpenShift cluster administrator to adjust your limit ranges - or delete if this a test cluster without resource pressures. This is because, there are some moderate resource requirements associated with this workshop, e.g. Jenkins alone requires 4 vCPU and 4 Gi memory and there are other resource hungry elements as well. These are set here:
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/29-resource-limits.png)
+### Update the Airflow Certificate
+1. On the OpenShift console, click *opentlc-mgr > Copy login command**  
+   <img src="./images/install-12.png" alt="drawing" width="200"/>  
+   OpenShift opens a new window and prompts you to log in.
+2. Log in with your open-tlc credentials.  
+3. Click **Display Token**  
+   <img src="./images/install-13.png" alt="drawing" width="400"/>  
+4. Copy the oc login command and paaste it in a terminal window.  
+   You have now logged on to the cluster from the terminal.
+5. In the terminal window, open the **ml-workshop** project  
+    ```
+    $ oc project ml-workshop
+    Now using project "ml-workshop" on server "https://api.cluster-034d.034d.sandbox1072.opentlc.com:6443".
+    ```
 
-- Next, install Open Data Hub Operator on the Operator Hub screen. Filter on _Open Data Hub_ and go with all the defaults. It will install in the openshift-operators namespace (this takes several minutes)
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/1-2-operatorhub-odh.png)
+The next steps will retrieve two certificates from the Airflow Worker Pod and save them in a secret.
 
+6. Copy and paste the following command into the terminal window:
+    ```
+    oc exec app-aflow-airflow-worker-0 -c airflow-worker -- openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
+    ```  
+    OpenShift will display all of the certificate information.
+7. Copy the text from the the beginning of the first *-----BEGIN CERTIFICATE-----* to the end of the last *-----END CERTIFICATE-----* into a text editor.
+8. Using the following ecxample, remove the two lines between the two certificates, and check there are no trailing spaces at the end of any lines. (Note: the example below has been editied for brevity.)  
+    ```
+    -----BEGIN CERTIFICATE-----
+    MIIELDCCAxSgAwIBAgIIOfIXBS41fYQwDQYJKoZIhvcNAQELBQAwRDESMBAGA1UE
+    CxMJb3BlbnNoaWZ0MS4wLAYDVQQDEyVrdWJlLWFwaXNlcnZlci1zZXJ2aWNlLW5l
+    dHdvcmstc2lnbmVyMB4XDTIyMDMwMjA2MTkwM1oXDTIyMDQwMTA2MTkwNFowFTET
+    MBEGA1UEAxMKMTcyLjMwLjAuMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+    AYxPddEpWo10StKSv3tOvDghTg58Ly6p5qenWT44dWarHN2QOw9L0YPSR99yLiTk
+    nH0MsLR09gfo55CbjkJfOnOYj0bLkSCTn8a+kj3WFT9HYlH73Fw/6fR8KQSiB/Ka
+    mOLMK7NtDILiFxBRWcHz3PKHj2ftFlwU3iKcpT7nMmyIGg3eg+4kqaJ+0pns11y2
+    UUP92UDl4VTdux3ZHCp/SxMOR7Cni0Wpw/h5cePeWzTOht+tgn3ajKoRbwxHKRGF
+    K6xZpWhrRMw/ZTeKwNyFUhcxHaKCgBljWFdNDVxurZQSmlNJTBJkwl7hUY4jY5ZC
+    tq/eBzgxGaCQyeBiM6x2uw==
+    -----END CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
+    MIIDTDCCAjSgAwIBAgIIUg78yUMH32swDQYJKoZIhvcNAQELBQAwRDESMBAGA1UE
+    CxMJb3BlbnNoaWZ0MS4wLAYDVQQDEyVrdWJlLWFwaXNlcnZlci1zZXJ2aWNlLW5l
+    dHdvcmstc2lnbmVyMB4XDTIyMDMwMjA2MDk0MFoXDTMyMDIyODA2MDk0MFowRDES
+    MBAGA1UECxMJb3BlbnNoaWZ0MS4wLAYDVQQDEyVrdWJlLWFwaXNlcnZlci1zZXJ2
+    KoZIhvcNAQELBQADggEBAGSuwM9jWTi8DHryZvjr7KAmvmBptA/uKpybYaiv2X8s
+    fY7DAErbQ50yaLRBOjJNGa1bRLuozEN+ggOBwMGz3+m/ouf9/wI6bSzxd9Y49qHA
+    ikw7w6nLq9KJNU6CxubOjhaTypvwTF6hysV8iNyYZe/4TkuUV36KriXom9CiLAWJ
+    2MvwWFay9h/761mBgxEFyfpFBkJwzSf6wteD37LZ8BbG4TqSl++jNcjBvjf0u7iL
+    yvYhNFOC7bJuNNDxxGJ/Oboq8LGyWYTy1T2ruFmBNYW0XsfxfHvfDYFRljVLyCOw
+    H7T/POEnc8u/FOPzIMeFgpHwX4btCNs3YTQFAkXT+e4=
+    -----END CERTIFICATE-----
+    ```
 
-At this point, on GUI go to Installed Operators and wait until the _Open Data Hub_ related operator is installed.
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/1-5-operatorhub-install-succeededXXXXXXXXXX.png)
+6. Click **Workloads > Secrets**  
+   OpenShift displays all secrets in the ml-workshop project.
+7. Click the **Create** button on the top right of the screen.
+8. Click **Key/Value secret**  
+   <img src="./images/install-14.png" alt="drawing" width="400"/>  
+9. Click **Create**
+10. Open the Pods view: Click **Workloads > Pods**  
+    Observe that the airflow scheduler changes from *Crashloop Backoff* to Running.  
+   <img src="./images/install-15.png" alt="drawing" width="400"/>  
 
-## Copy the Secrets into Airflow
-
-Create a new ke/value certificate in the project.
-Secret name: airflow-auth-cert
-Key name: ca.cert
-
-```
-openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
-```
-
-```
-oc exec app-aflow-airflow-worker-0 -c airflow-worker -- openssl s_client -showcerts -servername openshift.default.svc.cluster.local -connect openshift.default.svc.cluster.local:443
-```
+## Installation Complete
+The installation phase of Open Data Hub is now complete. Next you will configure the workshop environment.
 
 --------------------------------------------------------------------------------------------------------
+
+# Workshop COnfiguration
 
 ### Adding users to the workshop
 We provide a sample 30 user setup: _user1_.._user30_ each with the password _openshift_
