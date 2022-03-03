@@ -123,7 +123,7 @@ Keep this in the clipboard, you will use it shortly.
        OpenShift creates the KfDef and proceeeds to deploy ODH.  
   2.11 Click **Workloads > Pods** to observe the deployment progress.  
       <img src="./images/install-10.png" alt="drawing" width="400"/>  
-
+      You may observe that the Airflow Scheduler and possible the Airflow Worker are in Crashloop Backoff. That is because a certificate update is required.
 
 ### Update the Airflow Certificate
 1. On the OpenShift console, click *opentlc-mgr > Copy login command**  
@@ -148,7 +148,7 @@ The next steps will retrieve two certificates from the Airflow Worker Pod and sa
     ```  
     OpenShift will display all of the certificate information.
 7. Copy the text from the the beginning of the first *-----BEGIN CERTIFICATE-----* to the end of the last *-----END CERTIFICATE-----* into a text editor.
-8. Using the following ecxample, remove the two lines between the two certificates, and check there are no trailing spaces at the end of any lines. (Note: the example below has been editied for brevity.)  
+8. Using the following example, remove the two lines between the two certificates, and check there are no trailing spaces at the end of any lines. (Note: the example below has been editied for brevity. Your certificate will be larger.)  
     ```
     -----BEGIN CERTIFICATE-----
     MIIELDCCAxSgAwIBAgIIOfIXBS41fYQwDQYJKoZIhvcNAQELBQAwRDESMBAGA1UE
@@ -181,17 +181,23 @@ The next steps will retrieve two certificates from the Airflow Worker Pod and sa
 7. Click the **Create** button on the top right of the screen.
 8. Click **Key/Value secret**  
    <img src="./images/install-14.png" alt="drawing" width="400"/>  
-9. Click **Create**
+9. Click **Create**  
+   The certificate is installed.
+10. Force the pods to load the certificate.  
+    10.1 Click the **hamgurger button** on the **app-airflow-worker-0 pod**
+    10.2 Click **Delete Pod**
+   <img src="./images/install-15.png" alt="drawing" width="400"/>  
 10. Open the Pods view: Click **Workloads > Pods**  
     Observe that the airflow scheduler changes from *Crashloop Backoff* to Running.  
-   <img src="./images/install-15.png" alt="drawing" width="400"/>  
+   <img src="./images/install-16.png" alt="drawing" width="400"/>  
+   OpenShift restarts the pod and Airflow reaches a steady state.
 
 ## Installation Complete
 The installation phase of Open Data Hub is now complete. Next you will configure the workshop environment.
 
 --------------------------------------------------------------------------------------------------------
 
-# Workshop COnfiguration
+# Workshop Configuration
 
 ### Adding users to the workshop
 We provide a sample 30 user setup: _user1_.._user30_ each with the password _openshift_
