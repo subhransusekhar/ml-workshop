@@ -43,8 +43,8 @@ export REPO_HOME=`pwd`
    OpenShift displays a Commmunity Operator warning dialog box.
 6. Click **Continue**  
    OpenShift displays the operator details.
-7. Click **Install**  
-   OpenShift prompts for the operator configuration details. 
+7. Click **Install**   
+   OpenShift prompts for the operator configuration details.   
    <img src="./images/install-2.png" alt="drawing" width="500"/>  
 8. Accept all defaults and click **Install*  
    OpenShift installs the operator and displays a diaglog box once complete.  
