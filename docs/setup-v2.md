@@ -234,7 +234,6 @@ a) the Minio object storage Service which we'll refer to as MINIO_ADDRESS, and
 b) the Verta.ai model repository Service which we'll refer to as VERTA_ADDRESS.
 
 MINIO_ADDRESS and VERTA_ADDRESS are retrieved by navigating to Networking -> Services and locate the IP of their respective Services (verta being named _ml-modeldb-webapp_):
-![](https://github.com/masoodfaisal/ml-workshop/blob/main/docs/images/38-service_ips.png)
 
 MINIO_ADDRESS uses port 9000 and needs to be substituted in one file */notebook/Merge_Data.ipynb*. Open that file and search for _:9000_. Replace that with your MINIO_ADDRESS.
 
