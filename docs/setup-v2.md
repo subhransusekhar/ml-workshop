@@ -18,14 +18,15 @@ Both are functionally identical - but use different product data examples, appli
 
 If you are running this as a workshop, it is recommended you fork this repo as there are changes you can make to your instance of the repo, that will simplify the experience for the students. See section _Updating Tool URLs_ below.
 
-Do the following:
-- Clone this repo (or a fork thereof if you are a facilitator for students) and change directory into the root dir, _ml-workshop_.  Create a variable *REPO_HOME*_ for this directory
+1. Clone this repo (or a fork thereof if you are a facilitator for students)
 
-*<span style="color:yellow">REVISIT: Change to clone based on a tag/branch:  
-git clone -b tag --single-branch https:// github.com/masoodfaisal/ml-workshop<span>*
+ and change directory into the root dir, *_*ml-workshop*_*.  Create a variable *REPO_HOME*_ for this directory
+
+*<span style="color:yellow">REVISIT: Change to a non-personal repo, and clone based on a tag/branch:  
+git clone -b tag --single-branch https:// github.com/bryonbaker/ml-workshop<span>*
 
 ```
-git clone https://github.com/masoodfaisal/ml-workshop
+git clone https://github.com/bryonbaker/ml-workshop
 cd ml-workshop
 export REPO_HOME=`pwd`
 ```
@@ -63,7 +64,8 @@ a. Edit the KfDef file you create in OpenShift with the URL of your cluster. Pay
 b. Update the certificate for Airflow.
 
 ### Prerequisite Step:
-Before installing Open Data Hub you need to copy the KFDef file from a oublic git repository.
+Before installing Open Data Hub you need to copy the KFDef file from a oublic git repository.   
+<span style="color:yellow">** TODO: Change from Faisal's personal repo.**<span>
 1. Open the KFDef File from the github repository: https://github.com/masoodfaisal/odh-manifests/blob/master/kfdef/ml-workshop-limited.yaml
 2. Click the **Copy Raw Contents** button <img src="./images/install-1.png" alt="drawing" width="30"/> to copy the file contents to your clipboard. 
 
