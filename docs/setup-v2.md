@@ -14,13 +14,16 @@ There are two versions of this workshop you can choose to use:
 - a Telco use case
 Both are functionally identical - but use different product data examples, applicable to the chosen use case. At various part of the workshop, you use different files approapiate to your chosen use case.
 
+**<span style="color:yellow">REVISIT: This only has the FSI data files.<span>**
+
 ## Download the Workshop Files
 
 If you are running this as a workshop, it is recommended you fork this repo as there are changes you can make to your instance of the repo, that will simplify the experience for the students. See section _Updating Tool URLs_ below.
 
-1. Clone this repo (or a fork thereof if you are a facilitator for students)
-
- and change directory into the root dir, *_*ml-workshop*_*.  Create a variable *REPO_HOME*_ for this directory
+Using the example below:   
+1. Clone (or fork) this repo.
+2. Change directory into the root dir, *_*ml-workshop*_*.  
+3. Create a variable *REPO_HOME*_ for this directory
 
 *<span style="color:yellow">REVISIT: Change to a non-personal repo, and clone based on a tag/branch:  
 git clone -b tag --single-branch https:// github.com/bryonbaker/ml-workshop<span>*
