@@ -245,30 +245,26 @@ Save each of the three files and commit to your fork of this repository.
 
 ## Configure the S3 Storage
 
-### Download the Files Used For This Setup
-
-<span style="color:yellow">*REVISIT: Insert the instructions for downloading the files that will be uploaded below.*</span>
-
 ### Upload Files to the rawdata Bucket
+
+In this sectiopn we will upload the files that will be used for feature engineering. The files are located in the **data-files** directory in the ml-workshop git project you cloned earlier.
 
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**  
 
-<img src="./images/openshift-routes.png" alt="drawing" width="500"/>  
+   <img src="./images/openshift-routes.png" alt="drawing" width="500"/>  
 
 3. Scroll down to find *minio-ml-workshop-ui*. 
 4. Click the Minio url under **Location** heading  
-OpenShift opens a new browser tab and launches the Minio console and diaplays the login screen.
-
-<img src="./images/minio-1.png" alt="drawing" width="500"/>
+OpenShift opens a new browser tab and launches the Minio console and diaplays the login screen.   
+   <img src="./images/minio-1.png" alt="drawing" width="500"/>
 
 5. Enter the following credentials:  
 * Username: **minio**
 * Password: **minio123**
 6. Click **Login**  
 Minio displays the main console and all of the existing S3 buckets.  
-
-<img src="./images/minio-2.png" alt="drawing" width="400"/>
+   <img src="./images/minio-2.png" alt="drawing" width="400"/>
 
 7. Scroll down to find the *rawdata* bucket.
 8. Click **Browse**.  
@@ -289,8 +285,7 @@ Minio prompts for the folder to upload.
   $REPO_HOME/data-files
   ```
 11. Click the **customers** folder.   
-
-<img src="./images/minio-3.png" alt="drawing" width="400"/> 
+   <img src="./images/minio-3.png" alt="drawing" width="400"/> 
 
 11. Click: **Upload**.  
 Minio uploads the folder and all file contents to the *raw data* S3 bucket.
@@ -301,8 +296,7 @@ Minio uploads the folder and all file contents to the *raw data* S3 bucket.
 
 13. Repeat the above steps to upload the **products** folder.  
 The result should look like the following figure:  
-
-<img src="./images/minio-5.png" alt="drawing" width="400"/> 
+   <img src="./images/minio-5.png" alt="drawing" width="400"/> 
 
 ### Change the *model* Bucket's Permissions
 
@@ -310,23 +304,19 @@ The result should look like the following figure:
 
 15. Click **Buckets** in the Minio console pane.
 16. Scroll down to locate the **models** bucket.
-17. Click **Manage**
-
-Minio displays a configuration screen for the **models** bucket
-
-<img src="./images/minio-6.png" alt="drawing" width="400"/>  
+17. Click **Manage**   
+   Minio displays a configuration screen for the **models** bucket   
+   <img src="./images/minio-6.png" alt="drawing" width="400"/>  
 
 18. Click the **Edit** button <img src="./images/minio-6-1.png" alt="(edit settings button)" width="30"/>  under **Accesses Policy**  
-Minio displays **Change Access Policy** dialog box.
-
-<img src="./images/minio-7.png" alt="drawing" width="400"/>  
+Minio displays **Change Access Policy** dialog box.   
+   <img src="./images/minio-7.png" alt="drawing" width="400"/>  
 
 19. Change this setting to **Public**.
 20. Click **Set**.
 
-The updated configuration is displayed.
-
-<img src="./images/minio-8.png" alt="drawing" width="400"/>  
+The updated configuration is displayed.   
+   <img src="./images/minio-8.png" alt="drawing" width="400"/>  
 
 --------------------------------------------------------------------------------------------------------
 
@@ -334,36 +324,27 @@ The updated configuration is displayed.
 
 Now you need to set up Superset to talk to our S3 and Kafka raw data via Trino - exposing the data via SQL.
 
-1. Open the OpenShift console in your browser tab.
+1. Open the OpenShift console in your browser tab.  
+   <img src="./images/openshift-routes.png" alt="openshift-rountes.png" width="400"/>  
 
-![](./images/openshift-routes.png)
-
-2. Click the url for *superset*
-
-OpenShift opens a new browser tab and displays the Superset login page.
-
-![](./images/superset-1.png)
+2. Click the url for *superset*  
+   OpenShift opens a new browser tab and displays the Superset login page.
+   <img src="./images/superset-1.png" alt="superset-1.png" width="400"/>  
 
 5. Enter the following credentials:
 * Username: **admin**
 * Password: **admin**
-6. Click **SIGN IN**
+6. Click **SIGN IN**  
+   Superset diaplays the main console.  
+   <img src="./images/superset-2.png" alt="superset-2.png" width="400"/>  
 
-Superset diaplays the main console.
+7. Click: **Data > Databases**  
+   Superset displays a list of configured databases.  
+   <img src="./images/superset-3.png" alt="superset-4.png" width="400"/>  
 
-![](./images/superset-2.png)
-
-7. Click: **Data > Databases**
-
-Superset displays a list of configured databases.
-
-![](./images/superset-3.png)
-
-8. Click: the **"+ DATABASE"** button
-
-Superset prompts for the database connection details
-
-![](./images/superset-4.png)
+8. Click: the **"+ DATABASE"** button  
+   Superset prompts for the database connection details
+   <img src="./images/superset-4.png" alt="superset-4.png" width="400"/>  
 
 9. Click the **Supported Databases** drop-down list
 10. Scroll down to the entry **Trino** and click it.
@@ -371,98 +352,90 @@ Superset prompts for the database connection details
 ```
 trino://admin@trino-service:8080
 ```
-12. Click **Test Connection**.
-
+12. Click **Test Connection**.  
 If all steps have been performed correctly, Superset displays the message **Connection looks good!**.
+   <img src="./images/superset-5.png" alt="superset-5.png" width="400"/>  
 
-![](./images/superset-5.png)
-
-13. Click the **Advanced** tab in the **Edit Database** form.
-
-Superset prompts for the advanced database configuration.
-
-![](./images/superset-6.png)
+13. Click the **Advanced** tab in the **Edit Database** form.  
+Superset prompts for the advanced database configuration.   
+   <img src="./images/superset-6.png" alt="superset-6.png" width="300"/>  
 
 14. Click **SQL Lab**.
-15. Complete the form as illustrated in the following figure:
-![](./images/superset-7.png)
+15. Complete the form as illustrated in the following figure:  
+   <img src="./images/superset-7.png" alt="superset-7.png" width="300"/>  
 16. Click **CONNECT** (or **FINISH** if you have done this step previously)
+17. Click **SQL Lab Settings > Saved Queries** in the main toolbar.   
+   <img src="./images/superset-8.png" alt="superset-8.png" width="300"/>  
 
-17. Click **SQL Lab Settings** in the main toolbar.
-18. Click **Saved Queries**.
-
-![](./images/superset-8.png)
-
-19. Click the **+ QUERY** button.
+18. Click the **+ QUERY** button.
 
 <span style="color:yellow">*NOTE: **DO NOT SAVE THE QUERY**. We don't save this as it only needs to be run once per workshop*</span>
 
-20. Copy and paste the query editor.
+19. Copy and paste the query editor:   
+      ```
+      CREATE TABLE hive.default.customers (
+      customerId varchar,
+      gender varchar,
+      seniorCitizen varchar,
+      partner varchar,
+      dependents varchar,
+      tenure varchar
+      )
+      WITH (format = 'CSV',
+      skip_header_line_count = 1,
+      EXTERNAL_LOCATION='s3a://rawdata/customers'
+      )
+      ```
 
-```
-CREATE TABLE hive.default.customers (
-  customerId varchar,
-  gender varchar,
-  seniorCitizen varchar,
-  partner varchar,
-  dependents varchar,
-  tenure varchar
-)
-WITH (format = 'CSV',
-  skip_header_line_count = 1,
-  EXTERNAL_LOCATION='s3a://rawdata/customers'
-)
-```
+20. Click **Run**.  
+   Superset displays *Result - true* as shown.  
+   <img src="./images/superset-9.png" alt="superset-9.png" width="400"/>  
 
-<span style="color:yellow">REVISIT: Cannot complete writing these steps in the current environment. Come back and complete these...</span>
+21. In the same form, copy and paste the following SQL in the SQL editor:
+      ```
+      CREATE TABLE hive.default.products
+         (
+               customerID VARCHAR,
+               Premium VARCHAR,
+               RelationshipManager VARCHAR,
+               PrimaryChannel VARCHAR,
+               HasCreditCard VARCHAR,
+               DebitCard VARCHAR,
+               IncomeProtection VARCHAR,
+               WealthManagement VARCHAR,
+               HomeEquityLoans VARCHAR,
+               MoneyMarketAccount VARCHAR,
+               CreditRating VARCHAR,
+               PaperlessBilling VARCHAR,
+               AccountType VARCHAR,
+               MonthlyCharges VARCHAR,
+               TotalCharges VARCHAR,
+               Churn VARCHAR
+         )WITH (FORMAT = 'CSV',
+               skip_header_line_count = 1,
+               EXTERNAL_LOCATION = 's3a://rawdata/products/'
 
-21. Click **Run**.
+         )
+      ```
+22. Click **Run**.  
+   Superset runs the SQL and when complete displays **Result - true** the same as it did in the previous step. 
 
-Superset displays *Result - true* as shown. 
-![](./images/40-superset-saved-queries-3-run-createtable.png)
+23. Replace the SQL command with:  
+      ```
+      SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
+      from hive.default.customers customers,
+      hive.default.products products
+      where cast(customers.customerId as VARCHAR)= products.customerId
+      ```   
+   Run the query as shown. You should see a resultset spanning personal and product consumption customer data.  
+   <img src="./images/superset-10.png" alt="superset-10.png" width="400"/>  
 
-22. Replace the SQL command with
-```
-CREATE TABLE hive.default.products
-    (
-         customerID VARCHAR,
-         Premium VARCHAR,
-         RelationshipManager VARCHAR,
-         PrimaryChannel VARCHAR,
-         HasCreditCard VARCHAR,
-         DebitCard VARCHAR,
-         IncomeProtection VARCHAR,
-         WealthManagement VARCHAR,
-         HomeEquityLoans VARCHAR,
-         MoneyMarketAccount VARCHAR,
-         CreditRating VARCHAR,
-         PaperlessBilling VARCHAR,
-         AccountType VARCHAR,
-         MonthlyCharges VARCHAR,
-         TotalCharges VARCHAR,
-         Churn VARCHAR
-    )WITH (FORMAT = 'CSV',
-          skip_header_line_count = 1,
-          EXTERNAL_LOCATION = 's3a://rawdata/products/'
+24. Click the *SAVE AS* button <img src="./images/superset-11.png" alt="superset-11.png" width="50"/>.   
+Superset displays the Save As dialog box.
+25. Click the **Name** text box. Replace the text with: **Kafka-CSV-Join**
+26. Click the SAVE button.   
+    Superset saves the query.
 
-    )
-```
-23. Click **Run**.
+# Setup Complete
 
-Superset displays *Result - true* the same as it did in the previous step. 
-
-24. Replace the SQL command with
-```
-SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
-from hive.default.customers customers,
-hive.default.products products
-where cast(customers.customerId as VARCHAR)= products.customerId
-```
-
-
-Run the query as shown. You should see a resultset spanning personal and product consumption customer data. 
-![](./images/superset-10.png)
-
-Click Save AS - naming the query **Kafka-CSV-Join**
-
-We're now done with setup!
+You are now done with setup!
