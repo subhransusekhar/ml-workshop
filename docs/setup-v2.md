@@ -50,7 +50,7 @@ export REPO_HOME=`pwd`
    OpenShift installs the operator and displays a diaglog box once complete.  
    <img src="./images/install-3.png" alt="drawing" width="500"/>
 9. Click **View Operator**  
-    OpenShift displays the operator details.
+    OpenShift displays the operator details.   
    <img src="./images/install-4.png" alt="drawing" width="500"/>  
 
 The Open Data Hub Operator is now installed. Proceed to create the workshop project and install Open Data Hub
@@ -81,14 +81,15 @@ Keep this in the clipboard, you will use it shortly.
    <img src="./images/install-5.png" alt="drawing" width="300"/>  
 2. Delete the Limit Range for the project  
    2.1 Click **Administration > LimitRanges**  
-   2.2 Click the hambuger button for the **ml-workshop-core-resource-limits**.
+   2.2 Click the hambuger button for the **ml-workshop-core-resource-limits**.   
    <img src="./images/install-11.png" alt="drawing" width="400"/>  
    2.3 Click **Delete LimitRange**  
    OpenShift removes the LImitRange for the project.
 2. Install Open Data Hub  
    2.1 Click **Operators > Installed Operators**  
    OpenShift displays all the operators currently installed.  
-   <span style="color:yellow">**Note that the ml-workshop project is unselected and **All Projects** is selected. You must make ml-workshop the active project.**<span> 
+
+   <span style="color:yellow">**Note that the ml-workshop project is unselected and **All Projects** is selected. You must make ml-workshop the active project.**<span>  
 
    2.2 Click the **Projects** drop-down list and click **ml-workshop**  
    <img src="./images/install-6.png" alt="drawing" width="300"/>  
@@ -96,7 +97,7 @@ Keep this in the clipboard, you will use it shortly.
    OpenShift displays the operator's details.  
    <img src="./images/install-6.png" alt="drawing" width="300"/>  
    2.4 Click **Open Data Hub** in the operator toolbar.  
-   OpenShift displays the operand details - of which there are none.
+   OpenShift displays the operand details - of which there are none.   
    <img src="./images/install-7.png" alt="drawing" width="300"/>  
    2.5 Click the **Create KfDef** button.  
    2.6 Click the **YAML View** radio button  
@@ -330,12 +331,12 @@ Now you need to set up Superset to talk to our S3 and Kafka raw data via Trino -
    <img src="./images/openshift-routes.png" alt="openshift-rountes.png" width="400"/>  
 
 2. Click the url for *superset*  
-   OpenShift opens a new browser tab and displays the Superset login page.
+   OpenShift opens a new browser tab and displays the Superset login page.   
    <img src="./images/superset-1.png" alt="superset-1.png" width="400"/>  
 
-5. Enter the following credentials:
-* Username: **admin**
-* Password: **admin**
+5. Enter the following credentials:   
+* Username: **admin**   
+* Password: **admin**   
 6. Click **SIGN IN**  
    Superset diaplays the main console.  
    <img src="./images/superset-2.png" alt="superset-2.png" width="400"/>  
