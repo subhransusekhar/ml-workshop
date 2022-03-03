@@ -252,61 +252,57 @@ Save each of the three files and commit to your fork of this repository.
 ### Upload Files to the rawdata Bucket
 
 1. Open the OpenShift console in your browser.
-2. Click: **Networking > Routes**
+2. Click: **Networking > Routes**  
 
-<img src="./images/openshift-routes.png" alt="drawing" width="600"/>
+<img src="./images/openshift-routes.png" alt="drawing" width="500"/>  
 
 3. Scroll down to find *minio-ml-workshop-ui*. 
-4. Click the Minio url under **Location** heading
-
+4. Click the Minio url under **Location** heading  
 OpenShift opens a new browser tab and launches the Minio console and diaplays the login screen.
 
 <img src="./images/minio-1.png" alt="drawing" width="500"/>
 
-5. Enter the following credentials:
+5. Enter the following credentials:  
 * Username: **minio**
 * Password: **minio123**
-6. Click **Login**
-
-Minio displays the main console and all of the existing S3 buckets.
+6. Click **Login**  
+Minio displays the main console and all of the existing S3 buckets.  
 
 <img src="./images/minio-2.png" alt="drawing" width="400"/>
 
 7. Scroll down to find the *rawdata* bucket.
-8. Click **Browse**.
+8. Click **Browse**.  
+Minio displays the bucket contents.  
 
-Minio displays the bucket contents.
-
-You will now upload two folders (*customers* and *products*) to the *rawdata* bucket.
+You will now upload two folders (**customers** and **products**) to the *rawdata* bucket.
 
 ### Upload the *customers* data
 
-9. Click: **Upload Files > Upload Folder**
+9. Click: **Upload Files > Upload Folder**  
+
+   <img src="./images/minio-2-1.png" alt="drawing" width="400"/>  
 
 Minio prompts for the folder to upload.
 
-10. Navigate to the *customers* folder you extracted earlier. 
+10. Navigate to the data files directory within the git repository
+  ```
+  $REPO_HOME/data-files
+  ```
+11. Click the **customers** folder.   
 
-<span style="color:yellow">*REVISIT: Need to navigate into the git repo.*</span>
+<img src="./images/minio-3.png" alt="drawing" width="400"/> 
 
-11. Click: **Upload**.
-
+11. Click: **Upload**.  
 Minio uploads the folder and all file contents to the *raw data* S3 bucket.
+
+12. Click the **Clean Complete Objects** button <img src="./images/minio-4.png" alt="drawing" width="30"/> to reveal the hidden upload controls. 
 
 ### Upload the *products* data
 
-12. Click: **Upload Files > Upload Folder**
+13. Repeat the above steps to upload the **products** folder.  
+The result should look like the following figure:  
 
-Minio prompts for the folder to upload.
-
-13. Navigate to the *products* folder you extracted earlier. 
-14. Click: **Upload**.
-
-Minio uploads the folder and all file contents to the *raw data* S3 bucket.
-
-The result should look like the following figure:
-
-![](./images/minio-3.png)
+<img src="./images/minio-5.png" alt="drawing" width="400"/> 
 
 ### Change the *model* Bucket's Permissions
 
@@ -318,20 +314,19 @@ The result should look like the following figure:
 
 Minio displays a configuration screen for the **models** bucket
 
-![](./images/minio-4.png)
+<img src="./images/minio-6.png" alt="drawing" width="400"/>  
 
-18. Click the **Edit** icon setting under **Accesses Policy**
-
+18. Click the **Edit** button <img src="./images/minio-6-1.png" alt="(edit settings button)" width="30"/>  under **Accesses Policy**  
 Minio displays **Change Access Policy** dialog box.
 
-![](./images/minio-5.png)
+<img src="./images/minio-7.png" alt="drawing" width="400"/>  
 
 19. Change this setting to **Public**.
 20. Click **Set**.
 
 The updated configuration is displayed.
 
-![](./images/minio-6.png)
+<img src="./images/minio-8.png" alt="drawing" width="400"/>  
 
 --------------------------------------------------------------------------------------------------------
 
