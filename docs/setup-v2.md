@@ -36,7 +36,7 @@ export REPO_HOME=`pwd`
 
 ## Install the Open Data Hub Operator
 
-1. Log on to openShift with opentlc-mgr
+1. Log on to OpenShift as a Cluster Administrator. (For RHPDS this is opentlc-mgr.)
 2. Select the Administrator perspective
 3. Install the Open Data Hub operator. Click **Operators > Operator Hub**  
    OpenShift displays the operator catalogue.  
