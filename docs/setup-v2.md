@@ -182,21 +182,28 @@ The next steps will retrieve two certificates from the Airflow Worker Pod and sa
     -----END CERTIFICATE-----
     ```
 
-6. Click **Workloads > Secrets**  
+9. Click **Workloads > Secrets**  
    OpenShift displays all secrets in the ml-workshop project.
-7. Click the **Create** button on the top right of the screen.
-8. Click **Key/Value secret**  
+10. Click the **Create** button on the top right of the screen.
+11. Click **Key/Value secret** in the drop-down list box that appears.  
+   OpenShift diaplays the **Create key/value secret** window.   
+12. Complete the form as follows:  
+   - **Secret name:** airflow-auth-cert
+   - **Key:** ca.crt
+   - **Value:** *Paste the certificate details you captured ealier*  
    <img src="./images/install-14.png" alt="drawing" width="400"/>  
-9. Click **Create**  
-   The certificate is installed.
-10. Force the pods to load the certificate.  
-    10.1 Click the **hamgurger button** on the **app-airflow-worker-0 pod**
-    10.2 Click **Delete Pod**
-   <img src="./images/install-15.png" alt="drawing" width="400"/>  
-10. Open the Pods view: Click **Workloads > Pods**  
-    Observe that the airflow scheduler changes from *Crashloop Backoff* to Running.  
-   <img src="./images/install-16.png" alt="drawing" width="400"/>  
-   OpenShift restarts the pod and Airflow reaches a steady state.
+13. Click **Create**  
+    OpenShift installs the certificate. 
+    You will now force airflow to load the certificate.  
+14. Open the Pods view: Click **Workloads > Pods**  
+15. Locate the **app-airflow-web** pod.  
+16. Click the **hamgurger button** on the **app-aflow-airflow-web pod**  
+17. **Delete Pod**  
+    OpenShift restarts the pod and in the process loads the certificate.
+
+    <img src="./images/install-15.png" alt="drawing" width="400"/>  
+
+<span style="color:yellow">*REVISIT: Add a step to open Airflow and test the certificate works.*</span>
 
 ## Installation Complete
 The installation phase of Open Data Hub is now complete. Next you will configure the workshop environment.
