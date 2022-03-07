@@ -436,12 +436,18 @@ Superset prompts for the advanced database configuration.
 22. Click **Run**.  
    Superset runs the SQL and when complete displays **Result - true** the same as it did in the previous step. 
 
-23. Replace the SQL command with:  
+23. **REVISIT - FIX -  TO USE KAFKA FOR PRODUCT DATA**
+    Replace the SQL command with:  
       ```
+      -- SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
+      -- from hive.default.customers customers,
+      -- hive.default.products products
+      -- where cast(customers.customerId as VARCHAR)= products.customerId
+
       SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
       from hive.default.customers customers,
-      hive.default.products products
-      where cast(customers.customerId as VARCHAR)= products.customerId
+      customerchurn.default.data products
+      where cast(customers.customerId as VARCHAR) = cast(products.customerId as VARCHAR)
       ```   
    Run the query as shown. You should see a resultset spanning personal and product consumption customer data.  
    <img src="./images/superset-10.png" alt="superset-10.png" width="400"/>  
