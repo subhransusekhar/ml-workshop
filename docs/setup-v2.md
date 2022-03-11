@@ -237,7 +237,7 @@ The password for all users is **openshift**.
 
 ### Upload Files to the rawdata Bucket
 
-In this sectiopn we will upload the files that will be used for feature engineering. The files are located in the **data-files** directory in the ml-workshop git project you cloned earlier.
+In this section we will upload the files that will be used for feature engineering. The files are located in the **data-files** directory in the ml-workshop git project you cloned earlier.
 
 1. Open the OpenShift console in your browser.
 2. Click: **Networking > Routes**  
