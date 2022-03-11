@@ -219,7 +219,7 @@ If you are running ODH for a a workshop then you need to configure the users. If
 
 1. In a terminal window, type the following commands:
 ```
-cd $REPO_HOME/setup
+cd $REPO_HOME/scripts
 ./setup-users.sh
 ```
 
