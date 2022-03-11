@@ -288,26 +288,6 @@ Minio uploads the folder and all file contents to the *raw data* S3 bucket.
 The result should look like the following figure:  
    <img src="./images/minio-5.png" alt="drawing" width="400"/> 
 
-### Change the *model* Bucket's Permissions
-
-<span style="color:yellow">*REVISIT: Is this still needed?*</span>
-
-15. Click **Buckets** in the Minio console pane.
-16. Scroll down to locate the **models** bucket.
-17. Click **Manage**   
-   Minio displays a configuration screen for the **models** bucket   
-   <img src="./images/minio-6.png" alt="drawing" width="400"/>  
-
-18. Click the **Edit** button <img src="./images/minio-6-1.png" alt="(edit settings button)" width="30"/>  under **Accesses Policy**  
-Minio displays **Change Access Policy** dialog box.   
-   <img src="./images/minio-7.png" alt="drawing" width="400"/>  
-
-19. Change this setting to **Public**.
-20. Click **Set**.
-
-The updated configuration is displayed.   
-   <img src="./images/minio-8.png" alt="drawing" width="400"/>  
-
 --------------------------------------------------------------------------------------------------------
 
 ## Configure Superset
