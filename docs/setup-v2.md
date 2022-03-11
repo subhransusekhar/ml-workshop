@@ -282,12 +282,6 @@ Minio uploads the folder and all file contents to the *raw data* S3 bucket.
 
 12. Click the **Clean Complete Objects** button <img src="./images/minio-4.png" alt="drawing" width="30"/> to reveal the hidden upload controls. 
 
-### Upload the *products* data
-
-13. Repeat the above steps to upload the **products** folder.  
-The result should look like the following figure:  
-   <img src="./images/minio-5.png" alt="drawing" width="400"/> 
-
 --------------------------------------------------------------------------------------------------------
 
 ## Configure Superset
@@ -361,43 +355,8 @@ Superset prompts for the advanced database configuration.
    Superset displays *Result - true* as shown.  
    <img src="./images/superset-9.png" alt="superset-9.png" width="400"/>  
 
-21. In the same form, copy and paste the following SQL in the SQL editor:
+21. Replace the SQL command with:  
       ```
-      CREATE TABLE hive.default.products
-         (
-               customerID VARCHAR,
-               Premium VARCHAR,
-               RelationshipManager VARCHAR,
-               PrimaryChannel VARCHAR,
-               HasCreditCard VARCHAR,
-               DebitCard VARCHAR,
-               IncomeProtection VARCHAR,
-               WealthManagement VARCHAR,
-               HomeEquityLoans VARCHAR,
-               MoneyMarketAccount VARCHAR,
-               CreditRating VARCHAR,
-               PaperlessBilling VARCHAR,
-               AccountType VARCHAR,
-               MonthlyCharges VARCHAR,
-               TotalCharges VARCHAR,
-               Churn VARCHAR
-         )WITH (FORMAT = 'CSV',
-               skip_header_line_count = 1,
-               EXTERNAL_LOCATION = 's3a://rawdata/products/'
-
-         )
-      ```
-22. Click **Run**.  
-   Superset runs the SQL and when complete displays **Result - true** the same as it did in the previous step. 
-
-23. **REVISIT - FIX -  TO USE KAFKA FOR PRODUCT DATA**
-    Replace the SQL command with:  
-      ```
-      -- SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
-      -- from hive.default.customers customers,
-      -- hive.default.products products
-      -- where cast(customers.customerId as VARCHAR)= products.customerId
-
       SELECT customers.gender, customers.seniorcitizen, customers.partner, customers.dependents, customers.tenure, products.*  
       from hive.default.customers customers,
       customerchurn.default.data products
@@ -406,10 +365,10 @@ Superset prompts for the advanced database configuration.
    Run the query as shown. You should see a resultset spanning personal and product consumption customer data.  
    <img src="./images/superset-10.png" alt="superset-10.png" width="400"/>  
 
-24. Click the *SAVE AS* button <img src="./images/superset-11.png" alt="superset-11.png" width="50"/>.   
+22. Click the *SAVE AS* button <img src="./images/superset-11.png" alt="superset-11.png" width="50"/>.   
 Superset displays the Save As dialog box.
-25. Click the **Name** text box. Replace the text with: **Kafka-CSV-Join**
-26. Click the SAVE button.   
+23. Click the **Name** text box. Replace the text with: **Kafka-CSV-Join**
+24. Click the SAVE button.   
     Superset saves the query.
 
 # Setup Complete
