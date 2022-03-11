@@ -233,31 +233,6 @@ The password for all users is **openshift**.
 
 --------------------------------------------------------------------------------------------------------
 
-
-## Configure the Tools
-
-<span style="color:yellow">*REVISIT: Need to confirm how much of this will still be required.*</span>
-
-As mentioned above, **if you are running this as a workshop**, it is recommended you fork this repo.  The reason is, after you install the tools, your OpenShift Service IP addresses for various tools will be different for each installation. It is recommended for simplicity, that you update yours with your cluster's values, so your students don't have to.
-
-
-If you are forking the repo, you'll need to update the docs (all .md files in this directory) and replace all instances of https://github.com/masoodfaisal/ml-workshop with https://github.com/**YOUR_REPO**/ml-workshop
-
-You need to find **your** IP addresses for  
-a) the Minio object storage Service which we'll refer to as MINIO_ADDRESS, and 
-
-b) the Verta.ai model repository Service which we'll refer to as VERTA_ADDRESS.
-
-MINIO_ADDRESS and VERTA_ADDRESS are retrieved by navigating to Networking -> Services and locate the IP of their respective Services (verta being named _ml-modeldb-webapp_):
-
-MINIO_ADDRESS uses port 9000 and needs to be substituted in one file */notebook/Merge_Data.ipynb*. Open that file and search for _:9000_. Replace that with your MINIO_ADDRESS.
-
-VERTA_ADDRESS uses port 3000 needs to be substituted in two files */notebook/Model_Experiments.ipynb* and */notebook/Train_Model.ipynb*. Open each of those files and search for _:3000_. Replace that value in each file with your VERTA_ADDRESS.
-
-Save each of the three files and commit to your fork of this repository.
-
---------------------------------------------------------------------------------------------------------
-
 ## Configure the S3 Storage
 
 ### Upload Files to the rawdata Bucket
