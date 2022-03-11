@@ -191,10 +191,9 @@ The next steps will retrieve two certificates from the Airflow Worker Pod and sa
    - **Secret name:** airflow-auth-cert
    - **Key:** ca.crt
    - **Value:** *Paste the certificate details you captured ealier*  
-   <img src="./images/install-14.png" alt="drawing" width="400"/>  
+   <img src="./images/install-14-2.png" alt="drawing" width="400"/>  
       
-   **REVISIT: This screen shot is wrong. it is ca.crt, not ca.cert**
-      
+       
 13. Click **Create**  
     OpenShift installs the certificate. 
     You will now force airflow to load the certificate.  
