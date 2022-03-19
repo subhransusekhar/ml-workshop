@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd $REPO_HOME/setup
+cd $REPO_HOME/scripts
 oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd -n openshift-config
 
 oc apply -f htpasswd.cr
